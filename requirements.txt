@@ -2,9 +2,11 @@ fastapi==0.115.0
 uvicorn==0.30.6
 sqlalchemy==2.0.36
 psycopg2-binary==2.9.9
-python-dotenv==1.0.1
+python-dotenv==1.2.2
 httpx==0.27.2
-pyjwt==2.9.0
-uuid6==2024.1.12
+pyjwt==2.12.0
 slowapi==0.1.9
 pydantic==2.9.2
+uuid6==2024.1.12
+redis==5.0.1
+python-multipart==0.0.27
