@@ -537,7 +537,7 @@ async def upload_profiles_csv(
         # Validate age group
         if age_group not in VALID_AGE_GROUPS:
             skipped += 1
-            reasons["malformed_row"] += 1
+            reasons["invalid_age_group"] += 1
             continue
 
         # Validate age — must be a positive integer
