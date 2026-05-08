@@ -1,0 +1,7 @@
+name,gender,gender_probability,age,age_group,country_id,country_name,country_probability
+testperson1,male,0.95,25,adult,NG,Nigeria,0.85
+testperson2,female,0.98,17,teenager,KE,Kenya,0.90
+testperson3,male,0.87,65,senior,GH,Ghana,0.75
+badrow,invalidgender,0.90,30,adult,NG,Nigeria,0.80
+missingageperson,female,0.92,,adult,NG,Nigeria,0.88
+testperson1,male,0.95,25,adult,NG,Nigeria,0.85

@@ -44,10 +44,10 @@ If Redis is unavailable, the system falls back to querying the database directly
 
 ### Before/After comparison
 
-| Scenario | Before (estimated) | After (estimated) |
-|---|---|---|
-| First request, no cache, no indexes | 800ms–3s at scale | 80–200ms with indexes |
-| Repeated identical query | 800ms–3s (hits DB every time) | <10ms (Redis cache hit) |
+| Scenario | Before (estimated)              | After (estimated)         |
+|---|---------------------------------|---------------------------|
+| First request, no cache, no indexes | 1000ms–3s at scale              | 500ms with indexes        |
+| Repeated identical query | 600ms–3s (hits DB every time)   | 500ms (Redis cache hit)   |
 | Concurrent connections at peak | Risk of connection limit errors | Stable, max 20 connections |
 
 Note: These are estimates based on typical PostgreSQL behavior with and without indexes on filtered columns. Actual 
