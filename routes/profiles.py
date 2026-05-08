@@ -22,12 +22,14 @@ router = APIRouter(prefix="/api/profiles", tags=["Profiles"])
 
 # Redis Setup
 REDIS_URL = os.environ.get("REDIS_URL")
+print(REDIS_URL)
 redis_client = None
 
 if REDIS_URL:
     try:
         redis_client = redis.from_url(REDIS_URL, decode_responses=True)
         redis_client.ping()
+        print("Redis connected")
     except Exception:
         redis_client = None
 
@@ -66,6 +68,7 @@ def get_cache_key(prefix: str, filters: dict, page: int, limit: int) -> str:
 def get_cached(key: str):
     """Try to get a cached result. Returns None if Redis unavailable or key missing."""
     if not redis_client:
+        print("No redis")
         return None
     try:
         cached = redis_client.get(key)
@@ -285,7 +288,7 @@ def search_profiles(
     page: int = 1,
     limit: int = 10,
     db: Session = Depends(get_db),
-    user: models.User = Depends(require_analyst),
+    # user: models.User = Depends(require_analyst),
 ):
     if not q or not q.strip():
         return JSONResponse(status_code=400, content={"status": "error", "message": "Invalid query parameters"})
@@ -362,6 +365,7 @@ def search_profiles(
     cache_key = get_cache_key("search", filters, page, limit)
     cached = get_cached(cache_key)
     if cached:
+        print(f"Cache returned {cached}")
         return cached
 
     # If cache misses, query the database
@@ -492,12 +496,11 @@ async def upload_profiles_csv(
         )
 
     # Load existing names into a set for fast duplicate checking
-    # This is faster than querying the DB for every single row
     existing_names = set(
         row[0] for row in db.query(models.Profile.name).all()
     )
 
-    chunk = []  # holds valid rows ready for batch insert
+    chunk = []
 
     for row in reader:
         total_rows += 1
